@@ -1,0 +1,2 @@
+https://certbot.eff.org/lets-encrypt/ubuntubionic-other
+https://medium.com/@dbillinghamuk/certbot-certificate-verification-through-nginx-container-710c299ec549

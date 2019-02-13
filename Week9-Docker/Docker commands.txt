@@ -1,0 +1,60 @@
+keys: ----- splits the number stages
+||||||||| shows a different method for different files
+
+1. #create dockerfile
+
+vim Dockerfile
+--------------------------------------------------------------
+2. #insert the process for images here
+#Front-End
+
+FROM node:latest as node-build
+WORKDIR /build
+COPY . .
+RUN npm install
+ENTRYPOINT ["/usr/local/bin/npm", "start"]
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#Back-End (replace my-project.war with your .war filename)
+
+# build from maven
+
+FROM maven:latest as maven-build
+
+# change to a seperate folder for building our project,
+
+# keeps things neat
+WORKDIR /build
+
+# copy all project files in
+
+COPY . . 
+
+# build the project
+
+RUN mvn clean package
+
+
+# use the wildfly docker image
+
+FROM jboss/wildfly:latest
+
+# change the working directory to the deployments folder
+
+WORKDIR /opt/jboss/wildfly/standalone/deployments
+
+# here you would change 'my-project.war' to the 
+
+# name of your war file that gets created
+
+COPY --from=maven-build /build/target/my-project.war .
+-------------------------------------------------------------------------------------------------------------
+3. #build the image
+#instead of docker.io/ahmedabidali you can input your own dockerhub username e.g. docker.io/yourUsername
+
+docker build -t docker.io/ahmedabidali/nameOfDockerImage .
+---------------------------------------------------------------------------------------------------------------
+4. #run the container
+#instead of 8080:8080 you can change it to whatever port you want it to run in (so for the front end you want it to run on 3000 and backend on 8080)
+
+docker run -d -p 8080:8080 --name theContainerName theImageName
