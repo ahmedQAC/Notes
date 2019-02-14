@@ -1,0 +1,4 @@
+https://qa.openlms.qa.com/courses
+https://www.pluralsight.com/
+https://visualstudio.microsoft.com/dev-essentials/
+https://www.oreilly.com/library/view/learning-java-4th/9781449372477/pr02s07.html
